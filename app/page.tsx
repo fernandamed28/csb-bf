@@ -1,103 +1,189 @@
+"use client";
+
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Image from "next/image";
+import { motion } from "framer-motion";
+
+const posts = [
+  {
+    id: 1,
+    title: "Lancement du nouveau programme syndical",
+    excerpt: "Découvrez les grandes lignes du nouveau programme CSB pour 2025 et les ambitions portées par l’organisation.",
+    image: "/blog1.jpg",
+    date: "2025-10-01",
+    author: "A. Ouédraogo",
+  },
+  {
+    id: 2,
+    title: "Retour sur l’atelier régional de Ouaga",
+    excerpt: "Synthèse des échanges, recommandations et perspectives issues de l’atelier régional du 15 septembre.",
+    image: "/blog2.jpg",
+    date: "2025-09-15",
+    author: "M. Sawadogo",
+  },
+  {
+    id: 3,
+    title: "CSB lance sa plateforme digitale",
+    excerpt: "Un nouvel outil pour suivre les activités, rapports et annonces de la confédération en temps réel.",
+    image: "/blog3.jpg",
+    date: "2025-09-05",
+    author: "S. Kaboré",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <Header />
+      <main className="bg-gradient-to-br from-[#f9fbff] via-[#e9f3ff] to-white min-h-screen">
+        
+        {/* HERO */}
+        <section className="relative flex items-center justify-center min-h-[75vh] overflow-hidden">
+          {/* Fond animé */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-blue-700 via-cyan-500 to-blue-400 opacity-20 blur-[90px]"
+            animate={{ opacity: [0.15, 0.25, 0.15] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* Contenu */}
+          <motion.div
+            className="relative z-10 text-center max-w-4xl mx-auto px-4"
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+<h1 className="text-[25px] md:text-[25px] lg:text-[50px] font-extrabold text-blue-700 mb-6 leading-tight tracking-tight">
+              
+              <span className="bg-gradient-to-r from-blue-700 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
+                Confédération Syndicale Burkinabè (CSB)
+              </span>{" "}
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-700 mb-10 font-medium leading-relaxed">
+              Retrouvez les actualités, analyses, annonces et activités de la
+              Confédération Syndicale Burkinabè. <br />
+              <span className="text-cyan-600 font-semibold">Restez informés, restez engagés.</span>
+            </p>
+            <motion.a
+              href="#blog"
+              whileHover={{ scale: 1.07 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-block bg-gradient-to-r from-blue-700 to-cyan-500 text-white px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              Explorer les articles
+            </motion.a>
+          </motion.div>
+        </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {/* BLOG SECTION */}
+        <section id="blog" className="py-20 md:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <motion.h2
+              className="text-center text-4xl md:text-[4vw] font-extrabold text-blue-700 mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              Derniers articles
+            </motion.h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+              {posts.map((post, index) => (
+                <motion.article
+                  key={post.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="group bg-white rounded-3xl shadow-xl border border-blue-100 flex flex-col min-h-[440px] transition-transform duration-300 hover:-translate-y-3 hover:scale-[1.03] hover:shadow-2xl"
+                >
+                  <div className="relative w-full h-[230px] overflow-hidden rounded-t-3xl">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={500}
+                      height={230}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-900/10" />
+                  </div>
+
+                  <div className="flex flex-col flex-1 p-7">
+                    <div className="flex gap-3 text-cyan-500 text-sm font-semibold mb-2 opacity-90">
+                      <span>{new Date(post.date).toLocaleDateString("fr-FR")}</span>
+                      <span>• {post.author}</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-blue-700 mb-3 group-hover:text-cyan-600 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 text-base mb-5 flex-1 leading-relaxed">
+                      {post.excerpt}
+                    </p>
+                    <a
+                      href="#"
+                      className="text-cyan-600 font-semibold text-base hover:text-blue-700 transition-all duration-200 relative after:content-[''] after:block after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-700 after:to-cyan-400 after:transition-all after:duration-300 hover:after:w-full after:absolute after:left-0 after:bottom-[-2px]"
+                    >
+                      Lire l’article →
+                    </a>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ABOUT */}
+        <section
+          id="about"
+          className="py-24 md:py-32 bg-gradient-to-br from-white via-[#f2f8ff] to-[#e3f3ff] flex flex-wrap items-center justify-center gap-16 md:gap-28"
+        >
+          <motion.div
+            className="max-w-xl px-4"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-[4vw] font-extrabold text-blue-700 mb-6">
+              À propos de la CSB
+            </h2>
+            <p className="text-gray-700 text-lg mb-6 font-medium leading-relaxed">
+              La Confédération Syndicale Burkinabè (CSB) est une organisation engagée
+              pour la défense des droits des travailleurs, la promotion du dialogue
+              social et le renforcement du mouvement syndical au Burkina Faso.
+            </p>
+            <ul className="space-y-3">
+              {[
+                "Actualités syndicales et sociales",
+                "Analyses et dossiers thématiques",
+                "Vie de l’organisation",
+                "Plateforme ouverte aux membres",
+              ].map((item) => (
+                <li key={item} className="flex items-center text-lg text-cyan-600 font-semibold">
+                  <span className="mr-2 text-blue-700">✔</span> {item}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
           >
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/about.jpg"
+              alt="À propos"
+              width={420}
+              height={280}
+              className="rounded-[32px] shadow-2xl hover:scale-105 transition-transform duration-500"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+          </motion.div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      <Footer />
+    </>
   );
 }

@@ -1,0 +1,50 @@
+.footer {
+  background: linear-gradient(90deg,#1976d2 0%,#00bcd4 100%);
+  color: #fff;
+  padding: 2.5rem 0 1.2rem 0;
+  text-align: center;
+  margin-top: 3rem;
+}
+.container {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.brand img {
+  height: 36px;
+  width: 36px;
+  border-radius: 8px;
+  background: #fff;
+  object-fit: contain;
+}
+.links {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.links a {
+  color: #fff;
+  font-size: 1.1rem;
+  opacity: 0.85;
+  transition: color 0.2s, opacity 0.2s;
+  text-decoration: none;
+}
+.links a:hover {
+  color: #ffe082;
+  opacity: 1;
+}
+.copy {
+  font-size: 0.97rem;
+  opacity: 0.8;
+}
