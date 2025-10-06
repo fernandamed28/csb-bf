@@ -6,7 +6,7 @@ export default function Footer() {
         <div className="flex-1 mb-8 md:mb-0">
           <div className="flex items-center gap-3 mb-4">
             <img src="/medias/images/csb_logo.png" alt="" className="w-12 h-12 rounded-full shadow" />
-            <span className="font-bold text-2xl tracking-tight">CSB Blog</span>
+            <span className="font-bold text-2xl tracking-tight">CSB</span>
           </div>
           <p className="text-white/80 mb-3">
             La Confédération Syndicale Burkinabè (CSB) défend les droits des travailleurs, promeut le dialogue social et l’innovation syndicale au Burkina Faso.
