@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "CSB-bf",
     images: [
       {
-        url: "/images/csb_logo.png", // image 1200x630 px recommandée
+        url: "/images/csb_logo.ico", // image 1200x630 px recommandée
         width: 1200,
         height: 630,
         alt: "Logo CSB-bf- Votre E-Carnet de Santé",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/images/csb_logo.png",
-    shortcut: "/images/csb_logo.png",
-    apple: "/images/csb_logo.png",
+    icon: "/images/csb_logo.ico",
+    shortcut: "/images/csb_logo.ico",
+    apple: "/images/csb_logo.ico",
   },
 };
 
