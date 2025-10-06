@@ -5,7 +5,7 @@ export default function Footer() {
         {/* Bloc 1 */}
         <div className="flex-1 mb-8 md:mb-0">
           <div className="flex items-center gap-3 mb-4">
-            <img src="/logo-csb.png" alt="CSB Logo" className="w-12 h-12 rounded-full shadow" />
+            <img src="/medias/images/csb_logo.png" alt="" className="w-12 h-12 rounded-full shadow" />
             <span className="font-bold text-2xl tracking-tight">CSB Blog</span>
           </div>
           <p className="text-white/80 mb-3">
