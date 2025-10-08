@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-    --font-family: "Noto Sans", Calibri, Arial, sans-serif;
+    --font-family:  "Montserrat", "Inter", "Open Sans", "Noto Sans", Calibri, Arial, sans-serif;
     --radius: 0.625rem;
     --background: #f7fafd;
     --foreground: oklch(0.145 0 0);
@@ -44,7 +46,7 @@
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-    --font-sans: "Noto Sans", Calibri, Arial, sans-serif;
+    --font-sans:  "Montserrat", "Noto Sans", Calibri, Arial, sans-serif;
     --font-mono: var(--font-geist-mono);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
@@ -82,13 +84,14 @@
 }
 
 .font-noto {
-    font-family: "Noto Sans", Calibri, Arial, sans-serif;
+    font-family:  "Montserrat", "Noto Sans", Calibri, Arial, sans-serif;
 }
 
 body {
-    font-family: "Noto Sans", "Montserrat", Calibri, Arial, sans-serif;
+    font-family:  "Montserrat", "Noto Sans", Calibri, Arial, sans-serif;
     font-size: 16px; /* taille de police par défaut */
     line-height: 1.5; /* lisibilité */
+    font-weight: 800;
 }
 
 html, body, #__next {
@@ -211,7 +214,7 @@ th .resize-handle {
   transition: background 0.3s, transform 0.2s;
   animation: pulse 2s infinite;
   border: none;
-  cursor: pointer;
+  cursor: poMontserrat;
 }
 .ctaBtn:hover {
   background: #1976d2;
@@ -408,7 +411,7 @@ th .resize-handle {
   padding: 0.8rem 0;
   font-size: 1.1rem;
   font-weight: 600;
-  cursor: pointer;
+  cursor: poMontserrat;
   transition: background 0.2s, transform 0.2s;
 }
 .contactForm button:hover {

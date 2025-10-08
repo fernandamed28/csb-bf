@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         url: "/medias/images/csb_logo.ico", // image 1200x630 px recommandée
         width: 1200,
         height: 630,
-        alt: "Logo CSB-bf- Votre E-Carnet de Santé",
+        alt: "CSB-bf",
       },
     ],
     locale: "fr_FR",

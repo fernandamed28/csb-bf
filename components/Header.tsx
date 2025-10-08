@@ -14,8 +14,8 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: "S'inscrire", href: "/compte/incription/user" },
-  { name: "Se connecter", href: "/compte/connexion/user" },
+  { name: "S'inscrire", href: "/compte/user/inscription" },
+  { name: "Se connecter", href: "/compte/user/connexion" },
 ];
 
 export default function Header() {
@@ -39,6 +39,9 @@ export default function Header() {
                   />
                 </Link>
                 
+              </div>
+
+                
                 {/* Menu desktop */}
                 <div className="hidden md:flex items-center justify-center">
                     <div className="ml-10 flex items-baseline space-x-4">
@@ -49,7 +52,7 @@ export default function Header() {
                           key={item.name}
                           href={item.href}
                           className={clsx(
-                            "relative rounded-md px-3 py-2 text-base font-medium transition-colors duration-200",
+                            "relative rounded-md px-3 py-2 text-base font-semibold transition-colors duration-200",
                             isActive
                               ? "text-[#1976d2] after:w-full"
                               : "text-gray-800 hover:text-[#1976d2] hover:after:w-full",
@@ -63,20 +66,19 @@ export default function Header() {
                     })}
                   </div>
                 </div>
-                
-              </div>
 
+                
               {/* Boutons Connexion / Inscription */}
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center space-x-4">
                 <Link
-                  href="/compte/incription/user"
+                  href="/compte/user/inscription"
                   className="rounded-md border border-[#1976d2] px-4 py-2 text-sm font-semibold text-[#1976d2] hover:bg-[#1976d2]/10 transition"
                 >
                   S&apos;inscrire
                 </Link>
                   <Link
-                    href="/compte/connexion/user"
+                    href="/compte/user/authentification"
                     className="rounded-md bg-[#1976d2] text-white px-4 py-2 text-sm font-semibold shadow hover:bg-[#1976d2]/80 transition"
                   >
                     Se connecter
@@ -111,7 +113,7 @@ export default function Header() {
                       isActive
                         ? "bg-[#1976d2] text-white"
                         : "text-gray-800 hover:bg-gray-100 hover:text-[#1976d2]",
-                      "block rounded-md px-3 py-2 text-base font-medium"
+                      "block rounded-md px-3 py-2 text-base font-semibold"
                     )}
                     aria-current={isActive ? "page" : undefined}
                   >
@@ -127,7 +129,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-[#1976d2]"
+                    className="block rounded-md px-3 py-2 text-base font-semibold text-gray-700 hover:bg-gray-100 hover:text-[#1976d2]"
                   >
                     {item.name}
                   </Link>

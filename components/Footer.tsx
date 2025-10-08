@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-blue-700 to-cyan-400 text-white pt-10 pb-4 mt-16">
+    <footer className="bg-gradient-to-r from-blue-700 to-cyan-400 text-white pt-10 pb-4">
       <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-start gap-10">
         {/* Bloc 1 */}
         <div className="flex-1 mb-8 md:mb-0">
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
           <div className="mb-2 flex items-center gap-2">
             <svg className="w-5 h-5 text-yellow-200" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1C7.61 22 2 16.39 2 9.5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.35.27 2.67.76 3.88a1 1 0 0 1-.21 1.11l-2.2 2.2z"/></svg>
-            <span>+226 12 34 56 78</span>
+            <span>+226 </span>
           </div>
         </div>
       </div>
