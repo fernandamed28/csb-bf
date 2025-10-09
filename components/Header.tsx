@@ -8,14 +8,14 @@ import { usePathname } from "next/navigation";
 
 const navigation = [
   { name: "Accueil", href: "/" },
-  { name: "Activités", href: "/activites" },
-  { name: "Annonces", href: "/annonces" },
-  { name: "Contact", href: "/Contact" },
+  { name: "Activités", href: "/compte/user/authentification" },
+  { name: "Annonces", href: "#" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const userNavigation = [
   { name: "S'inscrire", href: "/compte/user/inscription" },
-  { name: "Se connecter", href: "/compte/user/connexion" },
+  { name: "Se connecter", href: "/compte/user/authentification" },
 ];
 
 export default function Header() {

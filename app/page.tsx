@@ -12,7 +12,7 @@ const posts = [
     title: "Lancement du nouveau programme syndical",
     excerpt:
       "Découvrez les grandes lignes du nouveau programme CSB pour 2025 et les ambitions portées par l’organisation.",
-    image: "/blog1.jpg",
+    image: "/medias/images/luca-bravo-9l_326FISzk-unsplash.jpg",
     date: "2025-10-01",
     author: "A. Ouédraogo",
   },
@@ -21,7 +21,7 @@ const posts = [
     title: "Retour sur l’atelier régional de Ouaga",
     excerpt:
       "Synthèse des échanges, recommandations et perspectives issues de l’atelier régional du 15 septembre.",
-    image: "/blog2.jpg",
+    image: "/medias/images/csb_logo.png",
     date: "2025-09-15",
     author: "M. Sawadogo",
   },
@@ -30,7 +30,7 @@ const posts = [
     title: "CSB lance sa plateforme digitale",
     excerpt:
       "Un nouvel outil pour suivre les activités, rapports et annonces de la confédération en temps réel.",
-    image: "/blog3.jpg",
+    image: "/medias/images/carlos-muza-hpjSkU2UYSU-unsplash.jpg",
     date: "2025-09-05",
     author: "S. Kaboré",
   },
@@ -96,14 +96,14 @@ export default function Home() {
               </span>
             </p>
             <motion.a
-              href="#blog"
-              onClick={handleScrollToBlog}
+              href="/compte/user/authentification"
+              /*onClick={handleScrollToBlog}*/
               whileHover={{ scale: 1.07 }}
               whileTap={{ scale: 0.97 }}
               transition={{ delay: 0.2, duration: 0.5 }}
               className="inline-block bg-gradient-to-r from-blue-700 to-cyan-500 text-white px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
             >
-              Explorer les articles
+              Explorer les activités
             </motion.a>
           </motion.div>
         </section>

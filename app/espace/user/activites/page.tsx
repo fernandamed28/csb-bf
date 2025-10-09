@@ -122,7 +122,7 @@ export default function ActivitesAdmin() {
                 Activités
               </h1>
               <p className="text-gray-500 text-sm mt-1">
-                Gérez, consultez et ajoutez les activités
+                Consultez les activités
               </p>
             </div>
             <div className="flex gap-2 items-center">

@@ -1,0 +1,18 @@
+# 1️⃣ Initialise Git s’il n’existe pas encore
+git init
+
+# 2️⃣ Ajoute tous les fichiers du projet
+git add .
+
+# 3️⃣ Fais un premier commit
+git commit -m "Initial commit - Migration du projet CSB vers GitHub"
+
+# 4️⃣ Connecte ton dépôt GitHub distant
+git remote add origin https://github.com/fernandamed28/csb-bf.git
+
+# 5️⃣ Vérifie que le remote est bien ajouté
+git remote -v
+
+# 6️⃣ Pousse ton code sur la branche principale
+git branch -M main
+git push -u origin main
