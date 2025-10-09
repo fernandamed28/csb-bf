@@ -1,18 +1,139 @@
-# 1️⃣ Initialise Git s’il n’existe pas encore
+Parfait ! Je te fais un **récapitulatif complet et clair** de A à Z pour :
+
+1. **Pousser tes modifications locales vers GitHub**
+2. **Récupérer le projet sur PlanetHoster via SSH**
+3. **Installer les dépendances et builder le projet**
+4. **Lancer le serveur Next.js en production**
+
+---
+
+## **1️⃣ Pousser les modifications locales vers GitHub**
+
+Depuis ton PC local (`D:\PROJECTS\WEB\CSB\csb-bf-project`) :
+
+```bash
+# Aller dans le dossier du projet
+cd D:\PROJECTS\WEB\CSB\csb-bf-project
+
+# Initialiser git si pas encore fait
 git init
 
-# 2️⃣ Ajoute tous les fichiers du projet
-git add .
-
-# 3️⃣ Fais un premier commit
-git commit -m "Initial commit - Migration du projet CSB vers GitHub"
-
-# 4️⃣ Connecte ton dépôt GitHub distant
+# Ajouter ton dépôt distant
 git remote add origin https://github.com/fernandamed28/csb-bf.git
 
-# 5️⃣ Vérifie que le remote est bien ajouté
+# Vérifier le dépôt distant
 git remote -v
 
-# 6️⃣ Pousse ton code sur la branche principale
-git branch -M main
+# Ajouter toutes les modifications
+git add .
+
+# Commit avec un message
+git commit -m "Modifications avant déploiement"
+
+# Pousser vers la branche principale
 git push -u origin main
+```
+
+> Remplace `main` par `master` si ta branche par défaut est `master`.
+
+---
+
+## **2️⃣ Connexion SSH et récupération du projet sur PlanetHoster**
+
+```bash
+# Connexion SSH à PlanetHoster
+ssh ssh://eaxjbxabyv@node12-ca.n0c.com:5022
+
+# Aller dans le dossier www (ou public_html)
+cd public_html
+
+# Cloner le projet depuis GitHub (si pas déjà cloné)
+git clone https://github.com/fernandamed28/csb-bf.git
+
+# Aller dans le dossier du projet
+cd csb-bf
+```
+
+> Si le projet existe déjà sur le serveur et que tu veux récupérer les dernières modifs :
+
+```bash
+# Aller dans le dossier existant
+cd csb-bf
+
+# Vérifier la branche actuelle
+git branch
+
+# Récupérer les dernières modifications
+git pull origin main
+```
+
+---
+
+## **3️⃣ Activer Node.js sur PlanetHoster**
+
+```bash
+# Activer l'environnement Node.js (version 20)
+source /home/eaxjbxabyv/nodevenv/public_html/csb-bf/20/bin/activate
+
+# Vérifier la version de Node et npm
+node -v
+npm -v
+```
+
+---
+
+## **4️⃣ Installer toutes les dépendances (y compris devDependencies)**
+
+```bash
+npm install --include=dev
+```
+
+---
+
+## **5️⃣ Supprimer l’ancienne build (optionnel mais conseillé)**
+
+```bash
+rm -rf .next
+```
+
+---
+
+## **6️⃣ Build du projet pour la production**
+
+```bash
+npm run build
+```
+
+* Sur PlanetHoster mutualisé, si tu rencontres `SIGABRT`, tu peux limiter les threads :
+
+```bash
+NEXT_PRIVATE_THREADS=1 npm run build
+```
+
+---
+
+## **7️⃣ Lancer le serveur Node.js**
+
+```bash
+npm run start
+```
+
+* Vérifie le port configuré dans le panel PlanetHoster.
+* Configure le **reverse proxy** pour que ton domaine pointe vers ce port.
+
+---
+
+## **8️⃣ Bonnes pratiques**
+
+* Chaque fois que tu modifies ton code :
+
+  1. `git add .` → `git commit -m "..."` → `git push`
+  2. Sur PlanetHoster : `git pull` → `npm install --include=dev` → `npm run build` → `npm run start`
+
+* Toujours **builder avant de lancer `npm run start`**.
+
+---
+
+Si tu veux, je peux te faire **une version “copier-coller” complète**, où toutes les commandes SSH et Node.js sont **dans l’ordre exact**, prête à exécuter pour un déploiement clean sur PlanetHoster.
+
+Veux‑tu que je fasse ça ?
