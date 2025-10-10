@@ -77,7 +77,7 @@ function AuthForm() {
       )}
       {error && <div className="bg-red-50 text-red-700 px-3 py-2 rounded text-center text-sm">{error}</div>}
       <div>
-        <label className="block text-gray-600 font-medium mb-1" htmlFor="email">Email</label>
+        <label className="block text-gray-600 font-semibold mb-1" htmlFor="email">Email</label>
         <input
           id="email"
           name="email"
@@ -91,7 +91,7 @@ function AuthForm() {
         />
       </div>
       <div>
-        <label className="block text-gray-600 font-medium mb-1" htmlFor="password">Mot de passe</label>
+        <label className="block text-gray-600 font-semibold mb-1" htmlFor="password">Mot de passe</label>
         <input
           id="password"
           name="password"

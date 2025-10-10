@@ -17,8 +17,8 @@ export default function AdminAuthPage() {
 
     useEffect(() => {
       // Redirige vers la page de login si PAS de token
-      if (!getToken()) {
-        router.replace("/compte/login/admin-csb-bf");
+      if (getToken()) {
+        router.replace("/espace/gestion-admin/admin/dashboard");
       }
     }, [router]);
 
@@ -110,7 +110,7 @@ export default function AdminAuthPage() {
               value={otp}
               onChange={e => setOtp(e.target.value)}
               required
-              className="border px-3 py-2 rounded w-full tracking-widest text-center font-mono"
+              className="border px-3 text-[17px] py-2 rounded w-full text-center"
               maxLength={6}
             />
             <button

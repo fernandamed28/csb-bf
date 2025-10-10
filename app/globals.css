@@ -88,10 +88,10 @@
 }
 
 body {
-    font-family:  "Montserrat", "Noto Sans", Calibri, Arial, sans-serif;
+    font-family:  "Montserrat", "Noto Sans", Calibri, Arial, sans-serif !important;
     font-size: 16px; /* taille de police par défaut */
     line-height: 1.5; /* lisibilité */
-    font-weight: 800;
+    font-weight: 600;
 }
 
 html, body, #__next {
@@ -99,6 +99,15 @@ html, body, #__next {
     padding: 0;
     height: 100%;
     overflow-x: hidden; /* évite scroll horizontal */
+    font-family:  "Montserrat", "Noto Sans", Calibri, Arial, sans-serif !important;
+}
+
+
+/* Ajout pour forcer la police sur tous les éléments, y compris en mobile */
+*,
+*:before,
+*:after {
+    font-family:  "Montserrat", "Noto Sans", Calibri, Arial, sans-serif !important;
 }
 
 .dark {
