@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import Header from "@/app/espace/gestion-admin/admin/Header_admin";
 import Footer from "@/components/Footer";
+import { setToken, getToken } from "@/lib/auth/admin/token";
 import {
   PencilIcon,
   ArrowPathIcon,
@@ -18,6 +19,73 @@ import {
 import { motion } from "framer-motion";
 import ActivityForm from "@/components/ActivityForm";
 import Modal from "@/components/Modal";
+
+// Fonction utilitaire pour détecter et mettre en surbrillance les liens dans un texte
+function highlightLinks(text: string) {
+  if (!text) return null;
+  // Regex pour détecter les URLs
+  const urlRegex = /((https?:\/\/|www\.)[^\s/$.?#].[^\s]*)/gi;
+  const parts = text.split(urlRegex);
+  return parts.map((part, i) => {
+    if (part.match(urlRegex)) {
+      let url = part;
+      if (!url.startsWith("http")) url = "https://" + url;
+      return (
+        <a
+          key={i}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-700 underline font-semibold bg-blue-50 px-1 rounded hover:bg-blue-100 transition"
+        >
+          {part}
+        </a>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
+// Fonction utilitaire pour le champ "résultat" : détecte les liens et évite d'ajouter "http://" à la fin
+function highlightLinksNoTrailingHttp(text: string) {
+  if (!text) return null;
+  // Regex pour détecter les URLs
+  const urlRegex = /((https?:\/\/|www\.)[^\s/$.?#].[^\s]*)/gi;
+  const parts = text.split(urlRegex);
+  // On filtre les parties vides ou qui sont juste "http://"
+  return parts
+    .map((part, i) => {
+      if (part.match(urlRegex)) {
+        let url = part;
+        if (!url.startsWith("http")) url = "https://" + url;
+        return (
+          <a
+            key={i}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-700 underline font-semibold bg-blue-50 px-1 rounded hover:bg-blue-100 transition"
+          >
+            {part}
+          </a>
+        );
+      }
+      return <span key={i}>{part}</span>;
+    })
+    // Correction du typage pour éviter l'erreur TS
+    .filter((el: any) => {
+      if (typeof el === "string") return el.trim() !== "http://";
+      if (
+        el &&
+        typeof el === "object" &&
+        "props" in el &&
+        typeof el.props.children === "string"
+      ) {
+        return (el.props.children as string).trim() !== "http://";
+      }
+      return true;
+    });
+}
 
 function formatPeriode(date_debut?: string, date_fin?: string) {
   if (!date_debut && !date_fin) return "";
@@ -55,6 +123,13 @@ export default function ActiviteDetail() {
   const resizingCol = useRef<number | null>(null);
   const startX = useRef<number>(0);
   const startWidth = useRef<number>(0);
+
+  useEffect(() => {
+    // Redirige vers la page de login si PAS de token
+    if (!getToken()) {
+      router.replace("/compte/login/admin-csb-bf");
+    }
+  }, [router]);
 
   const fetch = async () => {
     setLoading(true);
@@ -281,7 +356,7 @@ export default function ActiviteDetail() {
                     lignes.map((l: any, idx: number) => (
                       <tr key={idx} className="hover:bg-blue-50 transition-colors text-gray-500 text-sm align-top">
                         <td className="border px-2 py-2 text-center">{idx + 1}</td>
-                        <td className="border px-2 py-2">{l.resultat}</td>
+                        <td className="border px-2 py-2">{highlightLinksNoTrailingHttp(l.resultat)}</td>
                         <td className="border px-2 py-2">{l.activite}</td>
                         <td className="border px-2 py-2">{l.groupes_cibles}</td>
                         <td className="border px-2 py-2">{l.themes}</td>
@@ -289,7 +364,9 @@ export default function ActiviteDetail() {
                           {formatPeriode(l.date_debut, l.date_fin)}
                         </td>
                         <td className="border px-2 py-2">{l.lieux}</td>
-                        <td className="border px-2 py-2">{l.sources_verification}</td>
+                        <td className="border px-2 py-2">
+                          {highlightLinks(l.sources_verification)}
+                        </td>
                       </tr>
                     ))
                   )}

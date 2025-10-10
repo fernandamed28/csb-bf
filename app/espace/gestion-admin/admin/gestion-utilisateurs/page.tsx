@@ -1,88 +1,253 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getToken } from "@/lib/auth/admin/token";
 import Header from "../Header_admin";
-import { ChartBarIcon, UsersIcon, CalendarDaysIcon, ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
 import Footer from "@/components/Footer";
-import { hr } from "framer-motion/client";
-import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircleIcon, XCircleIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-const stats = [
-  {
-    id: 1,
-    title: "Activités en cours",
-    value: "12",
-    icon: CalendarDaysIcon,
-    color: "from-blue-600 to-cyan-500",
-    href: "/espace/gestion-admin/admin/activites",
-  },
-  {
-    id: 2,
-    title: "Utilisateurs enregistrés",
-    value: "245",
-    icon: UsersIcon,
-    color: "from-green-600 to-lime-500",
-    href: "/espace/gestion-admin/admin/gestion-utilisateurs",
-  },
-  {
-    id: 3,
-    title: "Rapports disponibles",
-    value: "37",
-    icon: ClipboardDocumentListIcon,
-    color: "from-purple-600 to-pink-500",
-    href: "/espace/gestion-admin/admin/rapports",
-  },
-  {
-    id: 4,
-    title: "Taux d’activité",
-    value: "87%",
-    icon: ChartBarIcon,
-    color: "from-orange-500 to-yellow-400",
-    href: "/espace/gestion-admin/admin/statistiques",
-  },
-];
+type User = {
+  id: number;
+  nom: string;
+  prenom: string;
+  email: string;
+  telephone: string;
+  statut: "actif" | "inactif";
+  created_at: string;
+};
 
+export default function GestionUtilisateurs() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [filter, setFilter] = useState<"all" | "actif" | "inactif">("all");
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [notif, setNotif] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
-export default function Dashboard() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!getToken()) {
+      router.replace("/compte/login/admin-csb-bf");
+    }
+  }, [router]);
+
+  const fetchUsers = async (statut?: "actif" | "inactif") => {
+    setLoading(true);
+    let url = "/api/espace/gestion-admin/admin/gestion-users";
+    if (statut) url += `?statut=${statut}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    setUsers(data.users || []);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUsers(filter === "all" ? undefined : filter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter]);
+
+  const handleStatut = async (id: number, statut: "actif" | "inactif") => {
+    setLoading(true);
+    const res = await fetch("/api/espace/gestion-admin/admin/gestion-users", {
+      method: "PATCH",
+      body: JSON.stringify({ id, statut }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    setLoading(false);
+    if (res.ok) {
+      setNotif({
+        type: "success",
+        message:
+          statut === "actif"
+            ? "Utilisateur activé et notifié par mail."
+            : "Utilisateur désactivé et notifié par mail.",
+      });
+      fetchUsers(filter === "all" ? undefined : filter);
+    } else {
+      setNotif({ type: "error", message: data.error || "Erreur lors du changement de statut." });
+    }
+    setTimeout(() => setNotif(null), 3000);
+  };
+
+  // Recherche sur nom, prénom, email
+  const filteredUsers = users.filter(
+    (u) =>
+      u.nom.toLowerCase().includes(search.toLowerCase()) ||
+      u.prenom.toLowerCase().includes(search.toLowerCase()) ||
+      u.email.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gradient-to-br from-[#f8fbff] via-[#eef4ff] to-white px-6 py-12">
-        <div className="max-w-7xl mx-auto">
-          {/* TITRE */}
-          <motion.h1
-            className="text-[25px] md:text-[25px] lg:text-[35px] font-extrabold text-blue-700/60 mb-6"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Tableau de bord 
-          </motion.h1>
+      <main className="p-8 min-h-screen bg-gradient-to-br from-[#f8fbff] via-[#eef4ff] to-white">
+        <div className="max-w-7xl mx-auto mb-6">
+          <h1 className="text-3xl font-extrabold mb-6 text-blue-700 tracking-tight">Gestion des utilisateurs</h1>
+          {/* Filtres + Recherche */}
+          <div className="flex flex-col md:flex-row gap-3 md:items-center mb-6">
+            <div className="flex gap-2">
+              <button
+                className={`px-4 py-2 rounded transition font-semibold ${
+                  filter === "all" ? "bg-blue-600 text-white shadow" : "bg-gray-100 text-gray-700 hover:bg-blue-50"
+                }`}
+                onClick={() => setFilter("all")}
+              >
+                Tous
+              </button>
+              <button
+                className={`px-4 py-2 rounded transition font-semibold ${
+                  filter === "actif" ? "bg-green-600 text-white shadow" : "bg-gray-100 text-gray-700 hover:bg-green-50"
+                }`}
+                onClick={() => setFilter("actif")}
+              >
+                Actifs
+              </button>
+              <button
+                className={`px-4 py-2 rounded transition font-semibold ${
+                  filter === "inactif" ? "bg-red-600 text-white shadow" : "bg-gray-100 text-gray-700 hover:bg-red-50"
+                }`}
+                onClick={() => setFilter("inactif")}
+              >
+                Inactifs
+              </button>
+              <button
+                className="ml-4 px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 font-semibold transition"
+                onClick={() => {
+                  setFilter("all"); // Réinitialise le filtre
+                  setSearch("");    // Vide le champ de recherche
+                }}
+              >
+                Actualiser
+              </button>
 
-          {/* STAT CARDS */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {stats.map((stat, index) => {
-        const Icon = stat.icon;
-        return (
-          <Link key={stat.id} href={stat.href}>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className={`cursor-pointer bg-white shadow-lg rounded-xl p-6 flex flex-col items-start justify-between border-l-4 border-transparent hover:border-l-4 hover:border-cyan-500 transition-all duration-300`}
-            >
-              <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${stat.color} flex items-center justify-center mb-4`}>
-                <Icon className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{stat.value}</h3>
-              <p className="text-gray-500 font-semibold">{stat.title}</p>
-            </motion.div>
-          </Link>
-        );
-      })}
-    </div>
+              <div className="relative w-full md:w-80 ml-auto">
+                <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-2.5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Rechercher par nom, prénom ou email..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pl-10 pr-3 py-2 bg-white border rounded-md w-full focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                  disabled={loading}
+                />
+              </div>
+
+          </div>
+          {/* Tableau */}
+          <div className="overflow-x-auto rounded-xl shadow-lg border border-blue-100 bg-white">
+            <table className="min-w-full divide-y divide-blue-100">
+              <thead className="bg-blue-50">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-blue-700 uppercase tracking-wider">Nom</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-blue-700 uppercase tracking-wider">Prénom</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-blue-700 uppercase tracking-wider">Email</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-blue-700 uppercase tracking-wider">Téléphone</th>
+                  <th className="px-4 py-3 text-center text-xs font-bold text-blue-700 uppercase tracking-wider">Statut</th>
+                  <th className="px-4 py-3 text-center text-xs font-bold text-blue-700 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={6} className="text-center py-12">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 1.1,
+                          ease: "linear",
+                        }}
+                        className="mx-auto w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full"
+                      />
+                    </td>
+                  </tr>
+                ) : filteredUsers.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="text-center py-12 text-gray-400">
+                      Aucun utilisateur trouvé.
+                    </td>
+                  </tr>
+                ) : (
+                  <AnimatePresence>
+                    {filteredUsers.map((user) => (
+                      <motion.tr
+                        key={user.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="hover:bg-blue-50 transition"
+                      >
+                        <td className="px-4 py-3 border-b">{user.nom}</td>
+                        <td className="px-4 py-3 border-b">{user.prenom}</td>
+                        <td className="px-4 py-3 border-b">{user.email}</td>
+                        <td className="px-4 py-3 border-b">{user.telephone}</td>
+                        <td className="px-4 py-3 border-b text-center">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${
+                              user.statut === "actif"
+                                ? "bg-green-100 text-green-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {user.statut === "actif" ? (
+                              <>
+                                <CheckCircleIcon className="w-4 h-4" />
+                                Actif
+                              </>
+                            ) : (
+                              <>
+                                <XCircleIcon className="w-4 h-4" />
+                                Inactif
+                              </>
+                            )}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 border-b text-center">
+                          {user.statut === "actif" ? (
+                            <button
+                              className="px-3 py-1 rounded bg-red-600 text-white font-semibold shadow hover:bg-red-700 transition"
+                              onClick={() => handleStatut(user.id, "inactif")}
+                              disabled={loading}
+                            >
+                              Désactiver
+                            </button>
+                          ) : (
+                            <button
+                              className="px-3 py-1 rounded bg-green-600 text-white font-semibold shadow hover:bg-green-700 transition"
+                              onClick={() => handleStatut(user.id, "actif")}
+                              disabled={loading}
+                            >
+                              Activer
+                            </button>
+                          )}
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </AnimatePresence>
+                )}
+              </tbody>
+            </table>
+          </div>
+          {/* Toast notification */}
+          <AnimatePresence>
+            {notif && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                className={`fixed bottom-8 right-8 z-50 px-6 py-4 rounded-lg shadow-lg font-semibold text-white ${
+                  notif.type === "success" ? "bg-green-600" : "bg-red-600"
+                }`}
+              >
+                {notif.message}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </main>
       <Footer />

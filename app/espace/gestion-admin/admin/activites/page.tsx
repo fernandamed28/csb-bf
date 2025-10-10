@@ -7,6 +7,7 @@ import Modal from "@/components/Modal";
 import Header from "@/app/espace/gestion-admin/admin/Header_admin";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import { setToken, getToken } from "@/lib/auth/admin/token";
 import {
   ArrowPathIcon,
   MagnifyingGlassIcon,
@@ -42,6 +43,16 @@ export default function ActivitesAdmin() {
   const router = useRouter();
   const pathname = usePathname();
 
+
+  useEffect(() => {
+    // Redirige vers la page de login si PAS de token
+    if (!getToken()) {
+      router.replace("/compte/login/admin-csb-bf");
+    }
+  }, [router]);
+
+
+  
   // On charge aussi les lignes pour chaque activité
   const fetchActivities = async (resetFilters = false) => {
     setLoading(true);

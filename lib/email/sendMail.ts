@@ -10,11 +10,19 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendMail({ to, subject, html }: { to: string; subject: string; html: string }) {
+type SendMailOptions = {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
+};
+
+export async function sendMail({ to, subject, html, replyTo }: SendMailOptions) {
   return transporter.sendMail({
     from: `"CSB-bf" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html,
+    ...(replyTo ? { replyTo } : {}),
   });
 }

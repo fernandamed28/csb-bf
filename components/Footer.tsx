@@ -38,21 +38,21 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        {/* Bloc 2 */}
+   {/* Bloc 2 */}
         <div className="flex-1 mb-8 md:mb-0">
           <h3 className="font-bold text-lg mb-3">Navigation</h3>
           <ul className="space-y-2">
             <li>
-              <a href="#hero" className="hover:text-yellow-200 transition-colors">Accueil</a>
+              <a href="/" className="hover:text-yellow-200 transition-colors">Accueil</a>
             </li>
             <li>
-              <a href="#blog" className="hover:text-yellow-200 transition-colors">Articles</a>
+              <a href="/compte/user/authentification" className="hover:text-yellow-200 transition-colors">Activités</a>
             </li>
             <li>
-              <a href="#about" className="hover:text-yellow-200 transition-colors">À propos</a>
+              <a href="#" className="hover:text-yellow-200 transition-colors">Annonces</a>
             </li>
             <li>
-              <a href="#contact" className="hover:text-yellow-200 transition-colors">Contact</a>
+              <a href="/contact" className="hover:text-yellow-200 transition-colors">Contact</a>
             </li>
           </ul>
         </div>
@@ -61,7 +61,7 @@ export default function Footer() {
           <h3 className="font-bold text-lg mb-3">Contact</h3>
           <div className="mb-2 flex items-center gap-2">
             <svg className="w-5 h-5 text-yellow-200" fill="currentColor" viewBox="0 0 24 24"><path d="M21 8V7l-3 2-2-2-7 7 2 2 7-7 2 2 3-2z"/></svg>
-            <span>contact@csb.org</span>
+            <span>infos@csb-bf.com</span>
           </div>
           <div className="mb-2 flex items-center gap-2">
             <svg className="w-5 h-5 text-yellow-200" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>

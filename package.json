@@ -2,12 +2,12 @@
   "name": "csp-project",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "node server.js",
-  "lint": "eslint"
-},
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node server.js",
+    "lint": "eslint"
+  },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.2.0",
@@ -17,6 +17,7 @@
     "country-telephone-data": "^0.6.3",
     "framer-motion": "^12.23.22",
     "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.544.0",
     "mysql2": "^3.15.1",
     "next": "15.5.4",

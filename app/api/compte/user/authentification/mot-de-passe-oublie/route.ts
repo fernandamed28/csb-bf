@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     }
     const user = users[0];
     const resetToken = jwt.sign({ id: user.id, email: user.email }, SECRET, { expiresIn: "30m" });
-    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/compte/user/authentification/mot-de-passe-oublie?token=${resetToken}`;
+    const resetUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "https://csb-bf.com"}/compte/user/authentification/mot-de-passe-oublie?token=${resetToken}`;
 
     await sendMail({
       to: user.email,
